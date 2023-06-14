@@ -19,6 +19,7 @@ import com.bolsadeideas.springboot.app.model.Salida;
 import com.bolsadeideas.springboot.app.model.Socio;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.persistence.EntityManagerFactory;
 
 @RestController
 @RequestMapping("/barco")
@@ -26,7 +27,7 @@ public class BarcoControlador {
 
 	@Autowired
 	private IBarcoDao barcoDao;
-
+	
 //------------------------------------Crud Barco.-----------------------------------------------------
 
 	@PostMapping("/crear")

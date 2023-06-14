@@ -15,50 +15,47 @@ import jakarta.transaction.Transactional;
 @Repository
 public class PatronDaoImpl implements IPatronDao {
 
-    @PersistenceContext
-    private EntityManager em;
+	@PersistenceContext
+	private EntityManager em;
 
-    @SuppressWarnings("unchecked")
-    @Transactional
-    public List<Patron> obtenerTodosLosPatrones() {
-        return em.createQuery("from Patron").getResultList();
-    }
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<Patron> obtenerTodosLosPatrones() {
+		return em.createQuery("from Patron").getResultList();
+	}
 
-    @Transactional
-    public Patron obtenerPatronPorId(String id) {
-        return em.find(Patron.class, id);
-    }
+	@Transactional
+	public Patron obtenerPatronPorId(String id) {
+		return em.find(Patron.class, id);
+	}
 
-    @Transactional
-    public void crearPatron(Patron patron) {
-        em.persist(patron);
-    }
+	@Transactional
+	public void crearPatron(Patron patron) {
+		em.persist(patron);
+	}
 
-    @Transactional
-    public void actualizarPatron(Patron patron) {
-        em.merge(patron);
-    }
+	@Transactional
+	public void actualizarPatron(Patron patron) {
+		em.merge(patron);
+	}
 
-    @Transactional
-    public void eliminarPatron(Patron patron) {
-        em.remove(patron);
-    }
+	@Transactional
+	public void eliminarPatron(Patron patron) {
+		em.remove(patron);
+	}
 
-    @SuppressWarnings("unchecked")
-    @Transactional
-    public List<Salida> obtenerSalidasDePatron(String id) {
-        return em.createQuery("select s from Salida s where s.patron.id = :id")
-                .setParameter("id", id)
-                .getResultList();
-    }
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<Salida> obtenerSalidasDePatron(String id) {
+		return em.createQuery("select s from Salida s where s.patron.id = :id").setParameter("id", id).getResultList();
+	}
 
-    @Transactional
-    public void asignarSalidaAPatron(String id, Salida salida) {
-        Patron patron = obtenerPatronPorId(id);
-        patron.getSalidas().add(salida);
-        salida.setPatron(patron);
-        em.merge(patron);
-        em.merge(salida);
-    }
+	@Transactional
+	public void asignarSalidaAPatron(String id, Salida salida) {
+		Patron patron = obtenerPatronPorId(id);
+		patron.getSalidas().add(salida);
+		salida.setPatron(patron);
+		em.merge(patron);
+		em.merge(salida);
+	}
 }
-
